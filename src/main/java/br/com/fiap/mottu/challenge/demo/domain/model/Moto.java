@@ -1,5 +1,6 @@
 package br.com.fiap.mottu.challenge.demo.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -34,6 +35,7 @@ public class Moto {
 
     @ManyToOne
     @JoinColumn(name = "patio_id")
+    @JsonBackReference
     private Patio patio;
 
     public Moto() {}
@@ -114,5 +116,6 @@ public class Moto {
     public void setPatio(Patio patio) {
         this.patio = patio;
     }
+
 }
 

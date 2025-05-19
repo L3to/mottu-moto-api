@@ -1,5 +1,7 @@
 package br.com.fiap.mottu.challenge.demo.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +33,8 @@ public class Patio {
 
 
     @OneToMany(mappedBy = "patio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @JsonIgnore
     private List<Moto> motos;
 
     public Patio() {}
