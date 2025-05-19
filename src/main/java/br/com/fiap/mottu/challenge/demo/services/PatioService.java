@@ -17,20 +17,20 @@ public class PatioService {
     @Autowired
     private PatioRepo patioRepo;
 
-  @Transactional(readOnly = true)
-  public Page<Patio> buscarPatios(String nome, Integer capacidadeMaxima, Integer capacidadeMinima, Pageable pageable) {
-      if (nome != null && capacidadeMaxima != null) {
-          return (Page<Patio>) patioRepo.findByNomeContainingIgnoreCase(nome, pageable)
-                  .map(patio -> patio.getCapacidadeMaxima() >= capacidadeMaxima ? patio : null)
-                  .filter(patio -> patio != null);
-      } else if (nome != null) {
-          return patioRepo.findByNomeContainingIgnoreCase(nome, pageable);
-      } else if (capacidadeMinima != null) {
-          return patioRepo.findByCapacidadeMaximaGreaterThanEqual(capacidadeMinima, pageable);
-      } else {
-          return patioRepo.findAll(pageable);
-      }
-  }
+    @Transactional(readOnly = true)
+    public Page<Patio> buscarPatios(String nome, Integer capacidadeMaxima, Pageable pageable) {
+        if (nome != null && capacidadeMaxima != null) {
+            return (Page<Patio>) patioRepo.findByNomeContainingIgnoreCase(nome, pageable)
+                    .map(patio -> patio.getCapacidadeMaxima() <= capacidadeMaxima ? patio : null)
+                    .filter(patio -> patio != null);
+        } else if (nome != null) {
+            return patioRepo.findByNomeContainingIgnoreCase(nome, pageable);
+        } else if (capacidadeMaxima != null) {
+            return patioRepo.findByCapacidadeMaximaGreaterThanEqual(capacidadeMaxima, pageable);
+        } else {
+            return patioRepo.findAll(pageable);
+        }
+    }
     @Transactional(readOnly = true)
     public Optional<Patio> buscarPorId(Long id) {
         return patioRepo.findById(id);

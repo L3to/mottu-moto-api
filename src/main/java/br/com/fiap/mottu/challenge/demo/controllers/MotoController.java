@@ -43,6 +43,7 @@ public class MotoController {
      * Exemplo de uso: /motos/1
      * Retorna os detalhes de uma moto específica pelo ID.
      */
+
     @GetMapping("/{id}")
     public ResponseEntity<MotoFullDTO> buscarPorId(@PathVariable Long id) {
         Optional<MotoFullDTO> moto = motoService.buscarPorId(id);

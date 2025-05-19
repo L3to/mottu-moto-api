@@ -26,9 +26,8 @@ public class PatioController {
     public ResponseEntity<Page<Patio>> buscarPatios(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer capacidadeMaxima,
-            @RequestParam(required = false) Integer capacidadeMinima,
             Pageable pageable) {
-        Page<Patio> patios = patioService.buscarPatios(nome, capacidadeMaxima, capacidadeMinima, pageable);
+        Page<Patio> patios = patioService.buscarPatios(nome, capacidadeMaxima, pageable);
         return ResponseEntity.ok(patios);
     }
 
