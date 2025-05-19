@@ -5,11 +5,11 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Localizacao {
-    private String patio;
+    private String andar;
     private String vaga;
 
-    public Localizacao(String patio, String vaga) {
-        this.patio = patio;
+    public Localizacao(String andar, String vaga) {
+        this.andar = andar;
         this.vaga = vaga;
     }
 
@@ -17,12 +17,12 @@ public class Localizacao {
 
     }
 
-    public String getPatio() {
-        return patio;
+    public String getAndar() {
+        return andar;
     }
 
-    public void setPatio(String patio) {
-        this.patio = patio;
+    public void setAndar(String patio) {
+        this.andar = patio;
     }
 
     public String getVaga() {
