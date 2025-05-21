@@ -194,4 +194,3 @@ spring.datasource.password=SUA_SENHA
 ## Acadêmico
 
 Este é um projeto acadêmico feito em colaboração com a FIAP e Mottu, como parte do curso de Análise e Desenvolvimento de Sistemas. 
-```
