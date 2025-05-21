@@ -1,9 +1,18 @@
-FROM maven:3.9.5-eclipse-temurin-17
-WORKDIR /app
-RUN adduser -s /bin/bash -D sll
-USER sll
-COPY .. /app
-RUN mvn clean package -DskipTests
-EXPOSE 8080 1521 22/tcp 80 5000 443/tcp 3000
-CMD ["java", "-jar", "target/mottu-moto-api-0.0.1-SNAPSHOT.jar"]
+FROM maven:3.9.9-eclipse-temurin-21-alpine
 
+WORKDIR /app
+
+ENV MAVEN_CONFIG=/app/.m2
+
+COPY . .
+
+RUN mvn clean package -DskipTests
+
+RUN adduser -s /bin/sh -D sll && \
+    chown -R sll:sll /app
+
+USER sll
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
