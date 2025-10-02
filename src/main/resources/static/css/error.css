@@ -1,0 +1,173 @@
+/* ------------------------------------------------------------------- */
+/* REFACTORED ERROR PAGE STYLES */
+/* ------------------------------------------------------------------- */
+
+/* Base container for centering content on the page */
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 50px; /* Adjust as needed */
+    width: 100%;
+}
+
+.error-container h1 {
+    /* Overrides the base h1 margin to bring it closer to the face */
+    margin-bottom: 20px;
+    color: var(--color-on-primary-container); /* Light green for the error message */
+    font-size: 2.2rem;
+}
+
+/* ---------------- FACE CONTAINER ---------------- */
+
+.face {
+    width: 300px;
+    height: 300px;
+    /* Changed border from gray to the main 'on-surface' color */
+    border: 4px solid var(--color-on-surface);
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    margin-top: 100px; /* Kept similar original spacing */
+}
+
+@media screen and (max-width: 400px) {
+    .face {
+        margin-top: 40px;
+        transform: scale(.8);
+    }
+}
+
+/* ---------------- HEAD BAND (French Flag) ---------------- */
+
+.face .band {
+    width: 350px;
+    height: 27px;
+    /* Kept dark border for contrast */
+    border: 4px solid var(--color-surface);
+    border-radius: 5px;
+    margin-left: -25px;
+    margin-top: 50px;
+}
+
+.face .band .red {
+    height: calc(100% / 3);
+    width: 100%;
+    /* Retained original red color */
+    background-color: #EB6D6D;
+}
+
+.face .band .white {
+    height: calc(100% / 3);
+    width: 100%;
+    /* Retained original white color */
+    background-color: #FFFFFF;
+}
+
+.face .band .blue {
+    height: calc(100% / 3);
+    width: 100%;
+    /* Retained original blue color */
+    background-color: #5E7FDC;
+}
+
+/* Shading effects */
+.face .band:before {
+    content: "";
+    display: inline-block;
+    height: 27px;
+    width: 30px;
+    /* Used a translucent white for highlights */
+    background-color: rgba(255, 255, 255, 0.3);
+    position: absolute;
+    z-index: 999;
+}
+
+.face .band:after {
+    content: "";
+    display: inline-block;
+    height: 27px;
+    width: 30px;
+    /* Used a translucent dark surface color for shadow */
+    background-color: rgba(31, 35, 30, 0.3);
+    position: absolute;
+    z-index: 999;
+    right: 0;
+    margin-top: -27px;
+}
+
+/* ---------------- EYES (Worry/Concern) ---------------- */
+
+.face .eyes {
+    width: 128px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.face .eyes:before,
+.face .eyes:after {
+    content: "";
+    display: inline-block;
+    width: 30px;
+    height: 15px;
+    /* Changed eye border to use the primary green color */
+    border: 7px solid var(--color-primary);
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+    border-bottom: 0;
+}
+
+.face .eyes:before {
+    margin-right: 20px;
+}
+
+.face .eyes:after {
+    margin-left: 20px;
+}
+
+/* ---------------- DIMPLES (Blush effect) ---------------- */
+
+.face .dimples {
+    width: 180px;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.face .dimples:before,
+.face .dimples:after {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    /* Kept the reddish/blush color for a worried look */
+    background-color: rgba(235, 109, 109, 0.4);
+}
+
+.face .dimples:before {
+    margin-right: 80px;
+}
+
+.face .dimples:after {
+    margin-left: 80px;
+}
+
+/* ---------------- MOUTH (Straight line) ---------------- */
+
+.face .mouth {
+    width: 40px;
+    height: 5px;
+    border-radius: 5px;
+    /* Changed mouth color to the main 'on-surface' white/off-white */
+    background-color: var(--color-on-surface);
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+/* ---------------- RETURN BUTTON ---------------- */
+
+/* The .action-btn class is now used from your base CSS 
+   and is styled with a prominent green background. 
+   No specific styling needed here unless you wanted to override it.
+*/

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="login-body">
+<div class="card login-container">
+    <h1>Criar Conta</h1>
+
+    <!-- Exibe mensagens de erro ou sucesso -->
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+    <div th:if="${success}" class="success-message" th:text="${success}"></div>
+
+    <form method="POST" th:action="@{/register}" th:object="${user}">
+        <div class="input-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" th:field="*{email}" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" th:field="*{password}" required>
+        </div>
+
+        <div class="form-full-width">
+            <button type="submit">Registrar</button>
+        </div>
+    </form>
+
+    <p class="mt-4">
+        Já tem uma conta? <a th:href="@{/login}" class="link-secondary">Fazer Login</a>
+    </p>
+</div>
+</body>
+</html>

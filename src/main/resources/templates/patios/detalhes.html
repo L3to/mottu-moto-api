@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Pátio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="content-wrapper">
+    <h1>Detalhes do Pátio: <span th:text="${patio.nome}" style="color: var(--color-on-primary-container);"></span></h1>
+
+    <div class="card" style="max-width: 800px;">
+
+        <div class="details-grid">
+
+            <div class="section-header">Informações Principais</div>
+
+            <div class="detail-item">
+                <strong>ID</strong>
+                <span th:text="${patio.id}">1</span>
+            </div>
+
+            <div class="detail-item">
+                <strong>Capacidade Máxima</strong>
+                <span th:text="${patio.capacidadeMaxima}">100</span>
+            </div>
+
+            <div class="detail-item">
+                <strong>Área Total (m&sup2;)</strong>
+                <span th:text="${#numbers.formatDecimal(patio.areaTotal, 1, 2)}">500.00</span>
+            </div>
+
+            <div class="section-header form-full-width" style="margin-top: 10px;">Observações</div>
+            <div class="detail-item form-full-width">
+                <p th:text="${patio.observacoes}">Nenhuma observação registrada para este pátio.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-full-width" style="margin-top: 10px;">
+        <a th:href="@{/patios/{id}/editar(id=${patio.id})}" class="action-btn">Editar Pátio</a>
+        <a th:href="@{/patios}" class="action-btn secondary-btn">Voltar para Lista</a>
+    </div>
+</div>
+</body>
+</html>

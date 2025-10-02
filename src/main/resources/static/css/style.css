@@ -1,0 +1,579 @@
+/* ------------------------------------------------------------------- */
+/* 1. DARK COLOR PALETTE & FONT DEFINITION (CSS Variables) */
+/* ------------------------------------------------------------------- */
+
+:root {
+    /* M3 Dark Theme Mapping (High Contrast) */
+    --color-primary: #75d88f; /* Bright Green */
+    --color-primary-container: #005317;
+    --color-secondary: #c2c9bc;
+    --color-secondary-container: #394b3c;
+
+    /* Backgrounds & Surfaces (Using darker shades for depth) */
+    --color-background: #191d18;
+    --color-surface: #1f231e; /* Slightly lighter than background */
+    --color-surface-variant: #424940;
+
+    /* On Colors (Text/Icons) */
+    --color-on-primary: #002106;
+    --color-on-surface: #eff2ec; /* Main light text color */
+    --color-on-surface-variant: #dee5d8;
+    --color-on-primary-container: #90f5a9; /* Light green for headers */
+
+    /* Borders & Interaction */
+    --color-outline: #727970;
+    --color-shadow: #000000;
+
+    /* Font Family */
+    --font-quicksand: 'Quicksand', sans-serif;
+}
+
+/* ------------------------------------------------------------------- */
+/* 2. GLOBAL STYLES & BASE LAYOUT */
+/* ------------------------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    font-family: var(--font-quicksand);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+h1 {
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 600;
+}
+
+a:hover {
+    color: var(--color-primary-container);
+    text-decoration: underline;
+}
+
+/* Utility Class for main content centering/width */
+.content-wrapper {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* ------------------------------------------------------------------- */
+/* 3. CARDS, FORMS, BUTTONS & INPUTS */
+/* ------------------------------------------------------------------- */
+
+/* General Card/Form Container */
+.card {
+    background-color: var(--color-surface);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px var(--color-shadow);
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Search Form Specific Styling */
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.search-form label {
+    color: var(--color-on-surface-variant);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+input[type="text"], input[type="number"], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-outline);
+    border-radius: 8px;
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    font-family: var(--font-quicksand);
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-container);
+    outline: none;
+}
+
+/* Button Styling (General) */
+button[type="submit"], .btn, .action-btn, button {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    border: none;
+    padding: 10px 24px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    display: inline-block; /* ensures action-btn links behave like buttons */
+    text-align: center;
+}
+
+button:hover, .btn:hover, .action-btn:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 85%, black);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Secondary Button for actions like 'Voltar' or 'Cancel' */
+.secondary-btn {
+    background-color: var(--color-secondary-container) !important;
+    color: var(--color-on-surface) !important;
+}
+
+.secondary-btn:hover {
+    background-color: color-mix(in srgb, var(--color-secondary-container) 85%, white) !important;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ------------------------------------------------------------------- */
+/* 4. MAIN FORM STYLING (Cadastro/Edit) */
+/* ------------------------------------------------------------------- */
+
+.form-grid {
+    display: grid;
+    gap: 20px;
+    /* Two columns for a balanced look on medium screens */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.form-full-width {
+    grid-column: 1 / -1; /* Spans all columns for buttons/titles */
+    text-align: center;
+    margin-top: 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    color: var(--color-on-surface-variant);
+}
+
+/* ------------------------------------------------------------------- */
+/* 5. DETAIL VIEW STYLING (Merged from details.css) */
+/* ------------------------------------------------------------------- */
+
+/* Grid layout for detail items */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Default to single column on mobile */
+    gap: 25px;
+    padding-top: 20px;
+}
+
+/* Two columns on desktop/tablet */
+@media (min-width: 600px) {
+    .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Styling for each individual data block */
+.detail-item {
+    background-color: var(--color-surface-variant);
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 5px solid var(--color-primary); /* Green accent bar */
+}
+
+.detail-item strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-on-surface-variant);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.detail-item span, .detail-item p { /* Added P tag for Obs field */
+    display: block;
+    font-size: 1.2rem;
+    color: var(--color-on-surface);
+    font-weight: 700;
+}
+
+/* Header separating sections (Identification vs. Location) */
+.section-header {
+    grid-column: 1 / -1; /* Header spans full width */
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: -15px;
+    border-bottom: 1px solid var(--color-outline-variant);
+    padding-bottom: 8px;
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+
+/* ------------------------------------------------------------------- */
+/* 6. TABLE STYLING */
+/* ------------------------------------------------------------------- */
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 30px auto;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: var(--color-surface);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th {
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    padding: 16px 15px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 1rem;
+    border-bottom: 3px solid var(--color-primary);
+}
+
+table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-surface-variant);
+    color: var(--color-on-surface);
+}
+
+table tr:nth-child(even) {
+    background-color: var(--color-surface-variant);
+}
+
+table td:last-child {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Action Links in Table */
+table td a {
+    font-size: 0.9rem;
+    margin: 0 8px;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+/* ------------------------------------------------------------------- */
+/* 7. PAGINATION */
+/* ------------------------------------------------------------------- */
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pagination a {
+    padding: 8px 15px;
+    border-radius: 8px;
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary);
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.pagination a.current {
+    background-color: var(--color-primary);
+}
+
+.pagination a.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------- */
+/* 8. MODAL STYLING */
+/* ------------------------------------------------------------------- */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+}
+
+.modal-actions {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* Specific button overrides for clarity */
+.modal-actions button {
+    flex-grow: 1;
+    font-size: 0.9rem;
+}
+
+button#confirmDelete {
+    background: #cf6679; /* Reddish error color */
+    color: var(--color-on-primary);
+}
+
+button#confirmDelete:hover {
+    background: color-mix(in srgb, #cf6679 85%, black);
+}
+
+button#cancelDelete {
+    background: var(--color-surface-variant);
+    color: var(--color-on-surface);
+}
+
+button#cancelDelete:hover {
+    background: color-mix(in srgb, var(--color-surface-variant) 85%, white);
+}
+
+/* ------------------------------------------------------------------- */
+/* 9. HUB PAGE STYLING (For index.html) */
+/* ------------------------------------------------------------------- */
+
+.hub-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.hub-card {
+    /* Inherit from .card but use a different base background */
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    text-decoration: none;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px var(--color-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid var(--color-outline);
+}
+
+.hub-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+    border-color: var(--color-primary);
+}
+
+.hub-card h2 {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.hub-card p {
+    color: var(--color-on-surface-variant);
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.hub-icon {
+    font-size: 3rem;
+    line-height: 1;
+    margin-top: 10px;
+}
+
+/* Ensure links inside the card don't override the card hover effect */
+.hub-card a:hover {
+    text-decoration: none;
+}
+
+/* Assumes variables like --color-primary, --color-surface, --color-on-surface,
+   --color-error, --color-success, --color-outline, --color-shadow are defined previously.
+*/
+
+/* ------------------------------------------------------------------- */
+/* 10. AUTHENTICATION (LOGIN & REGISTER) STYLING */
+/* ------------------------------------------------------------------- */
+
+.login-body {
+    /* Define um fundo sutil para a página de login/registro */
+    background-color: #1a1a1a;
+    background-image: radial-gradient(#333 1px, transparent 0);
+    background-size: 40px 40px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+}
+
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 40px;
+    background-color: var(--color-surface); /* Cor de superfície do tema */
+    border-radius: 16px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--color-outline);
+    text-align: center;
+}
+
+.login-container h1 {
+    color: var(--color-primary);
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-on-surface-variant);
+    font-weight: 500;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-outline);
+    border-radius: 8px;
+    background-color: #2c2c2c;
+    color: var(--color-on-surface);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 128, 0, 128), 0.3); /* Sombra suave para foco */
+    outline: none;
+}
+
+.login-container button[type="submit"] {
+    width: 100%;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 10px;
+}
+
+.login-container button[type="submit"]:hover {
+    background-color: #5d005d; /* Variação mais escura do primary */
+    transform: translateY(-1px);
+}
+
+.error-message {
+    background-color: #440000;
+    color: var(--color-error);
+    border: 1px solid var(--color-error);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.success-message {
+    background-color: #004400;
+    color: #4caf50;
+    border: 1px solid #4caf50;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.mt-4 {
+    margin-top: 20px;
+    color: var(--color-on-surface-variant);
+}
+
+.link-secondary {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.link-secondary:hover {
+    text-decoration: underline;
+    color: #9c27b0; /* Cor de hover ligeiramente diferente */
+}
+
+/* Garante que o body das outras páginas não seja afetado pelo login-body */
+body:not(.login-body) {
+    background-color: var(--color-background);
+}

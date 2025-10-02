@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub de Gerenciamento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="content-wrapper">
+    <h1>Hub de Gerenciamento</h1>
+
+    <div class="hub-container">
+        <a th:href="@{/patios}" class="hub-card" sec:authorize="hasRole('ADMIN')">
+            <h2>Gerenciamento de Pátios</h2>
+            <p>Acesse a lista e ferramentas para Pátios.</p>
+            <span class="hub-icon">🅿️</span>
+        </a>
+
+        <a th:href="@{/motos}" class="hub-card" sec:authorize="hasAnyRole('ADMIN', 'USER')">
+            <h2>Gerenciamento de Motos</h2>
+            <p>Acesse a lista e ferramentas para Motos.</p>
+            <span class="hub-icon">🏍️</span>
+        </a>
+
+        <a th:href="@{/role}" class="hub-card" sec:authorize="hasRole('ADMIN')">
+            <h2>Gerenciamento de Usuários</h2>
+            <p>Gerencie as permissões dos usuários (ADMIN).</p>
+            <span class="hub-icon">⚙️</span>
+        </a>
+    </div>
+
+
+
+    <form th:action="@{/logout}" method="POST" class="logout-form">
+        <button type="submit" class="secondary-btn">Logout</button>
+    </form>
+
+</div>
+</body>
+</html>

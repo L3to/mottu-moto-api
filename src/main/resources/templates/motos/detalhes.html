@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Moto</title>
+    <!-- Quicksand Font Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <!-- Linking the main style.css AND the new details-specific CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="content-wrapper">
+    <!-- Display the Model in the main header for context -->
+    <h1>Detalhes da Moto: <span th:text="${moto.modelo}" style="color: var(--color-on-primary-container);"></span></h1>
+
+    <div class="card" style="max-width: 800px;">
+
+        <div class="details-grid">
+
+            <div class="section-header">Identificação</div>
+
+            <!-- ID -->
+            <div class="detail-item">
+                <strong>ID</strong>
+                <span th:text="${moto.id}">1</span>
+            </div>
+
+            <!-- Placa -->
+            <div class="detail-item">
+                <strong>Placa</strong>
+                <span th:text="${moto.placa}">ABC-1234</span>
+            </div>
+
+            <!-- Chassi -->
+            <div class="detail-item">
+                <strong>Chassi</strong>
+                <span th:text="${moto.chassi}">9BW00000X01234567</span>
+            </div>
+
+            <!-- Status Sensor -->
+            <div class="detail-item">
+                <strong>Status do Sensor</strong>
+                <span th:text="${moto.statusSensor}">ATIVADO</span>
+            </div>
+
+            <div class="section-header">Localização Atual</div>
+
+            <!-- Andar -->
+            <div class="detail-item">
+                <strong>Andar</strong>
+                <!-- Accessing nested property localizacaoAtual -->
+                <span th:text="${moto.localizacaoAtual.andar}">5</span>
+            </div>
+
+            <!-- Vaga -->
+            <div class="detail-item">
+                <strong>Vaga</strong>
+                <!-- Accessing nested property localizacaoAtual -->
+                <span th:text="${moto.localizacaoAtual.vaga}">B27</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-full-width" style="margin-top: 10px;">
+        <a th:href="@{/motos/{id}/editar(id=${moto.id})}" class="action-btn">Editar Moto</a>
+        <a th:href="@{/motos}" class="action-btn secondary-btn">Voltar para Lista</a>
+    </div>
+</div>
+</body>
+</html>

@@ -2,33 +2,39 @@ package br.com.fiap.mottu.challenge.demo.controllers;
 
 import br.com.fiap.mottu.challenge.demo.domain.model.Patio;
 import br.com.fiap.mottu.challenge.demo.services.PatioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/patios")
+@Tag(name = "Gerenciamento de Pátios (MVC)",
+        description = "Controller MVC para gerenciamento completo de pátios: cadastro, consulta, " +
+                "atualização, remoção e administração das áreas de estacionamento de motocicletas.")
 public class PatioController {
 
     @Autowired
     private PatioService patioService;
 
-    /**
-     * GET /patios
-     * Exemplo: /patios?nome=Central&capacidadeMinima=50&page=0&size=10
-     */
+
     @GetMapping
-    public ResponseEntity<Page<Patio>> buscarPatios(
+    public String index(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer capacidadeMaxima,
-            Pageable pageable) {
+            @RequestParam(required = false) String sort, // Added sort parameter to mirror MotoController
+            Pageable pageable,
+            Model model) {
+
         Page<Patio> patios = patioService.buscarPatios(nome, capacidadeMaxima, pageable);
-        return ResponseEntity.ok(patios);
+        model.addAttribute("patios", patios);
+        return "patios";
     }
 
     /**
@@ -36,59 +42,79 @@ public class PatioController {
      * Exemplo: /patios/1
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Patio> buscarPorId(@PathVariable Long id) {
+    public String detalhes(@PathVariable Long id, Model model) {
         Optional<Patio> patio = patioService.buscarPorId(id);
-        return patio.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    /**
-     * POST /patios
-     * Exemplo de corpo da requisição:
-     * {
-     *   "nome": "Central",
-     *   "capacidadeMaxima": 100,
-     *   "areaTotal": 500.0,
-     *   "observacoes": "Pátio principal"
-     * }
-     */
-    @PostMapping
-    public ResponseEntity<Patio> salvar(@RequestBody Patio patio) {
-        Patio patioSalvo = patioService.salvar(patio);
-        return ResponseEntity.status(HttpStatus.CREATED).body(patioSalvo);
-    }
-
-    /**
-     * PUT /patios/{id}
-     * Exemplo: /patios/1
-     * Exemplo de corpo da requisição:
-     * {
-     *   "nome": "Central Atualizado",
-     *   "capacidadeMaxima": 150,
-     *   "areaTotal": 600.0,
-     *   "observacoes": "Atualização do pátio principal"
-     * }
-     */
-    @PutMapping("/{id}")
-    public ResponseEntity<Patio> atualizar(@PathVariable Long id, @RequestBody Patio patioAtualizado) {
-        try {
-            Patio patio = patioService.atualizar(id, patioAtualizado);
-            return ResponseEntity.ok(patio);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+        if (patio.isPresent()) {
+            model.addAttribute("patio", patio.get());
+            return "patios/detalhes";
         }
+        return "redirect:/patios";
     }
 
     /**
-     * DELETE /patios/{id}
-     * Exemplo: /patios/1
+     * GET /patios/cadastro
+     * Formulário para cadastrar novo pátio.
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    @GetMapping("/cadastro")
+    public String formularioCadastro(Model model) {
+        model.addAttribute("patio", new Patio());
+        return "patios/cadastro";
+    }
+
+    /**
+     * POST /patios/cadastro
+     * Salva o novo pátio no banco e redireciona.
+     */
+    @PostMapping("/cadastro")
+    public String salvar(
+            @Valid @ModelAttribute Patio patio, Model model) {
+
+        patioService.salvar(patio);
+        return "redirect:/patios";
+    }
+
+    /**
+     * GET /patios/{id}/editar
+     * Abre o formulário de edição de um pátio.
+     */
+    @GetMapping("/{id}/editar")
+    public String formularioEditar(@PathVariable Long id, Model model) {
+        Optional<Patio> patio = patioService.buscarPorId(id);
+        if (patio.isPresent()) {
+            model.addAttribute("patio", patio.get());
+            return "patios/edit";
+        }
+        return "redirect:/patios";
+    }
+
+    /**
+     * POST /patios/{id}/editar
+     * Processa a edição de um pátio.
+     */
+    @PostMapping("/{id}/editar")
+    public String atualizar(
+            @PathVariable Long id,
+            @ModelAttribute Patio patio,
+            Model model) {
+        try {
+            patioService.atualizar(id, patio);
+        } catch (RuntimeException e) {
+            return "redirect:/patios";
+        }
+        return "redirect:/patios";
+    }
+
+    /**
+     * GET /patios/{id}/deletar
+     * Remove um pátio pelo ID (Acesso via link simples).
+     */
+    @GetMapping("/{id}/deletar")
+    public String deletar(@PathVariable Long id, Model model) {
         try {
             patioService.deletar(id);
-            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            model.addAttribute("error", "Não foi possível deletar o pátio.");
         }
+        return "redirect:/patios";
     }
 }

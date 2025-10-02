@@ -1,12 +1,21 @@
 package br.com.fiap.mottu.challenge.demo.domain.model;
 
+import br.com.fiap.mottu.challenge.demo.utils.StatusSensor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "TB_CHMOTTU_MOTO")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Moto {
 
     @Id
@@ -37,85 +46,4 @@ public class Moto {
     @JoinColumn(name = "patio_id")
     @JsonBackReference
     private Patio patio;
-
-    public Moto() {}
-
-    public Moto(Long id, String modelo, String placa, String chassi, boolean ativa, StatusSensor statusSensor, Localizacao localizacaoAtual, Patio patio) {
-        this.id = id;
-        this.modelo = modelo;
-        this.placa = placa;
-        this.chassi = chassi;
-        this.ativa = ativa;
-        this.statusSensor = statusSensor;
-        this.localizacaoAtual = localizacaoAtual;
-        this.patio = patio;
-    }
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public String getChassi() {
-        return chassi;
-    }
-
-    public void setChassi(String chassi) {
-        this.chassi = chassi;
-    }
-
-    public boolean isAtiva() {
-        return ativa;
-    }
-
-    public void setAtiva(boolean ativa) {
-        this.ativa = ativa;
-    }
-
- public StatusSensor getStatusSensor() {
-        return statusSensor;
-    }
-
-    public void setStatusSensor(StatusSensor statusSensor) {
-        this.statusSensor = statusSensor;
-    }
-
-    public Localizacao getLocalizacaoAtual() {
-        return localizacaoAtual;
-    }
-
-    public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
-        this.localizacaoAtual = localizacaoAtual;
-    }
-
-    public Patio getPatio() {
-        return patio;
-    }
-
-    public void setPatio(Patio patio) {
-        this.patio = patio;
-    }
-
 }
-

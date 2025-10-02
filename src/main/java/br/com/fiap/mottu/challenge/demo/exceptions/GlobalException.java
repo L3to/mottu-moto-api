@@ -1,31 +1,30 @@
 package br.com.fiap.mottu.challenge.demo.exceptions;
 
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
-@RestControllerAdvice
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+@ControllerAdvice
 public class GlobalException {
 
-    @ExceptionHandler(RuntimeException.class)
-    public ApiError handleRuntimeException(RuntimeException ex) {
-        return new ApiError(HttpStatus.BAD_REQUEST, "Erro inesperado: " + ex.getMessage());
-    }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFound(
+            ResourceNotFoundException ex, WebRequest request) {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ApiError handleIllegalArgumentException(IllegalArgumentException ex) {
-        return new ApiError(HttpStatus.BAD_REQUEST, "Argumento inválido: " + ex.getMessage());
-    }
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.NOT_FOUND.value());
+        body.put("error", "Not Found");
+        body.put("message", ex.getMessage());
+        body.put("path", request.getDescription(false).replace("uri=", ""));
 
-    @ExceptionHandler(Exception.class)
-    public ApiError handleGenericException(Exception ex) {
-        return new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno: " + ex.getMessage());
-    }
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ApiError handleNotFoundException(EntityNotFoundException ex) {
-        return new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
 }

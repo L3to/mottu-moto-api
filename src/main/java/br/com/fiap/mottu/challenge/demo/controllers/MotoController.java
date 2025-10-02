@@ -1,19 +1,24 @@
 package br.com.fiap.mottu.challenge.demo.controllers;
 
 import br.com.fiap.mottu.challenge.demo.domain.dto.MotoFullDTO;
-import br.com.fiap.mottu.challenge.demo.domain.model.StatusSensor;
+import br.com.fiap.mottu.challenge.demo.utils.StatusSensor;
 import br.com.fiap.mottu.challenge.demo.services.MotoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/motos")
+@Tag(name = "Gerenciamento de Motocicletas",
+        description = "API para gerenciamento completo de motocicletas: cadastro, consulta, " +
+                "atualização, remoção e monitoramento de status dos sensores")
 public class MotoController {
 
     @Autowired
@@ -21,102 +26,97 @@ public class MotoController {
 
     /**
      * GET /motos
-     * Exemplo de uso: /motos?modelo=Honda&statusSensor=ATIVADO&page=0&size=10&sort=modelo,asc
-     * Parâmetros opcionais:
-     * - modelo: Filtra motos pelo modelo (exemplo: "Honda").
-     * - statusSensor: Filtra motos pelo status do sensor (exemplo: "ATIVADO").
-     * - sort: Ordena os resultados (exemplo: "modelo,asc" ou "placa,desc").
-     * - paginação: page (número da página) e size (tamanho da página).
+     * Exemplo: /motos?modelo=Honda&statusSensor=ATIVADO&page=0&size=10
      */
     @GetMapping
-    public ResponseEntity<Page<MotoFullDTO>> buscarMotos(
+    public String index(
             @RequestParam(required = false) String modelo,
             @RequestParam(required = false) StatusSensor statusSensor,
             @RequestParam(required = false) String sort,
-            Pageable pageable) {
+            Pageable pageable,
+            Model model) {
         Page<MotoFullDTO> motos = motoService.buscarMotos(modelo, statusSensor, pageable, sort);
-        return ResponseEntity.ok(motos);
+        model.addAttribute("motos", motos);
+        return "motos"; // View name
     }
 
     /**
      * GET /motos/{id}
-     * Exemplo de uso: /motos/1
-     * Retorna os detalhes de uma moto específica pelo ID.
+     * Exemplo: /motos/1
      */
-
     @GetMapping("/{id}")
-    public ResponseEntity<MotoFullDTO> buscarPorId(@PathVariable Long id) {
+    public String detalhes(@PathVariable Long id, Model model) {
         Optional<MotoFullDTO> moto = motoService.buscarPorId(id);
-        return moto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    /**
-     * POST /motos
-     * Exemplo de corpo da requisição:
-     * {
-     *   "modelo": "Honda",
-     *   "placa": "ABC1234",
-     *   "chassi": "1234567890",
-     *   "ativa": true,
-     *   "statusSensor": "ATIVADO",
-     *   "localizacaoAtual": {
-     *     "patio": "Pátio Central",
-     *     "vaga": "A1"
-     *   },
-     *   "patio": {
-     *     "id": 1
-     *   }
-     * }
-     * Cria uma nova moto com os dados fornecidos.
-     */
-    @PostMapping
-    public ResponseEntity<MotoFullDTO> salvar(@RequestBody MotoFullDTO motoFullDTO) {
-        MotoFullDTO motoSalva = motoService.salvar(motoFullDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(motoSalva);
-    }
-
-    /**
-     * PUT /motos/{id}
-     * Exemplo de uso: /motos/1
-     * Exemplo de corpo da requisição:
-     * {
-     *   "modelo": "Yamaha",
-     *   "placa": "XYZ5678",
-     *   "chassi": "0987654321",
-     *   "ativa": false,
-     *   "statusSensor": "MANUTENCAO",
-     *   "localizacaoAtual": {
-     *     "patio": "Pátio Norte",
-     *     "vaga": "B2"
-     *   },
-     *   "patio": {
-     *     "id": 2
-     *   }
-     * }
-     * Atualiza os dados de uma moto existente pelo ID.
-     */
-    @PutMapping("/{id}")
-    public ResponseEntity<MotoFullDTO> atualizar(@PathVariable Long id, @RequestBody MotoFullDTO motoFullDTO) {
-        try {
-            MotoFullDTO motoAtualizada = motoService.atualizar(id, motoFullDTO);
-            return ResponseEntity.ok(motoAtualizada);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+        if (moto.isPresent()) {
+            model.addAttribute("moto", moto.get());
+            return "motos/detalhes"; // View for motorcycle details
         }
+        return "redirect:/motos"; // Redirecting if not found
     }
 
     /**
-     * DELETE /motos/{id}
-     * Exemplo de uso: /motos/1
-     * Remove uma moto específica pelo ID.
+     * GET /motos/cadastro
+     * Formulário para cadastrar nova moto.
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    @GetMapping("/cadastro")
+    public String formularioCadastro(Model model) {
+        model.addAttribute("moto", new MotoFullDTO());
+        return "motos/cadastro"; // View name for form
+    }
+
+    /**
+     * POST /motos/cadastro
+     * Salva a nova moto no banco e redireciona.
+     */
+    @PostMapping("/cadastro")
+    public String salvar(
+            @Valid @ModelAttribute MotoFullDTO motoFullDTO, Model model) {
+        motoService.salvar(motoFullDTO);
+        return "redirect:/motos";
+    }
+
+    /**
+     * GET /motos/{id}/editar
+     * Abre o formulário de edição de uma moto.
+     */
+    @GetMapping("/{id}/editar")
+    public String formularioEditar(@PathVariable Long id, Model model) {
+        Optional<MotoFullDTO> moto = motoService.buscarPorId(id);
+        if (moto.isPresent()) {
+            model.addAttribute("moto", moto.get());
+            return "motos/edit";
+        }
+        return "redirect:/motos";
+    }
+
+    /**
+     * POST /motos/{id}/editar
+     * Processa a edição de uma moto.
+     */
+    @PostMapping("/{id}/editar")
+    public String atualizar(
+            @PathVariable Long id,
+            @ModelAttribute MotoFullDTO motoFullDTO,
+            Model model) {
+        try {
+            motoService.atualizar(id, motoFullDTO);
+        } catch (RuntimeException e) {
+            return "redirect:/motos";
+        }
+        return "redirect:/motos";
+    }
+
+    /**
+     * GET /motos/{id}/deletar
+     * Remove uma moto pelo ID.
+     */
+    @GetMapping("/{id}/deletar")
+    public String deletar(@PathVariable Long id, Model model) {
         try {
             motoService.deletar(id);
-            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            model.addAttribute("error", "Não foi possível deletar a moto.");
         }
+        return "redirect:/motos";
     }
 }

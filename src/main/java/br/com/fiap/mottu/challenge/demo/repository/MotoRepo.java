@@ -1,7 +1,7 @@
 package br.com.fiap.mottu.challenge.demo.repository;
 
 import br.com.fiap.mottu.challenge.demo.domain.model.Moto;
-import br.com.fiap.mottu.challenge.demo.domain.model.StatusSensor;
+import br.com.fiap.mottu.challenge.demo.utils.StatusSensor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

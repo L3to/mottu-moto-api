@@ -4,13 +4,11 @@ import br.com.fiap.mottu.challenge.demo.domain.dto.MotoFullDTO;
 import br.com.fiap.mottu.challenge.demo.domain.model.Localizacao;
 import br.com.fiap.mottu.challenge.demo.domain.model.Moto;
 import br.com.fiap.mottu.challenge.demo.domain.model.Patio;
-import br.com.fiap.mottu.challenge.demo.domain.model.StatusSensor;
-import br.com.fiap.mottu.challenge.demo.exceptions.GlobalException;
+import br.com.fiap.mottu.challenge.demo.utils.StatusSensor;
 import br.com.fiap.mottu.challenge.demo.repository.MotoRepo;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +25,6 @@ public class MotoService {
     @Autowired
     private PatioService patioService;
 
-    @Cacheable("motos")
     @Transactional(readOnly = true)
     public Page<MotoFullDTO> buscarMotos(String modelo, StatusSensor statusSensor, Pageable pageable, String sort) {
         Sort sortOrder = Sort.unsorted();

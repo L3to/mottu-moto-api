@@ -1,4 +1,4 @@
-package br.com.fiap.mottu.challenge.demo.domain.model;
+package br.com.fiap.mottu.challenge.demo.utils;
 
 public enum StatusSensor {
 

@@ -7,11 +7,17 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "TB_CHMOTTU_PATIO")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Patio {
 
     @Id
@@ -31,68 +37,15 @@ public class Patio {
     @Size(max = 1000, message = "A observação deve ter no máximo 1000 caracteres.")
     private String observacoes;
 
-
     @OneToMany(mappedBy = "patio", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @JsonIgnore
     private List<Moto> motos;
 
-    public Patio() {}
-
     public Patio(String nome, int capacidadeMaxima, double areaTotal, String observacoes) {
         this.nome = nome;
         this.capacidadeMaxima = capacidadeMaxima;
         this.areaTotal = areaTotal;
-        this.observacoes = observacoes;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-
-
-    public List<Moto> getMotos() {
-        return motos;
-    }
-
-    public void setMotos(List<Moto> motos) {
-        this.motos = motos;
-    }
-
-    public int getCapacidadeMaxima() {
-        return capacidadeMaxima;
-    }
-
-    public void setCapacidadeMaxima(int capacidadeMaxima) {
-        this.capacidadeMaxima = capacidadeMaxima;
-    }
-
-    public double getAreaTotal() {
-        return areaTotal;
-    }
-
-    public void setAreaTotal(double areaTotal) {
-        this.areaTotal = areaTotal;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
 }

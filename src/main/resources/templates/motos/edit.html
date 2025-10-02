@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Moto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="content-wrapper">
+    <h1>Editar Moto</h1>
+
+    <div class="card">
+        <form th:action="@{/motos/{id}/editar(id=${moto.id})}" th:object="${moto}" method="post">
+            <input type="hidden" name="_method" value="put" />
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" id="modelo" th:field="*{modelo}">
+                </div>
+
+                <div class="input-group">
+                    <label for="placa">Placa:</label>
+                    <input type="text" id="placa" th:field="*{placa}">
+                </div>
+
+                <div class="input-group">
+                    <label for="chassi">Chassi:</label>
+                    <input type="text" id="chassi" th:field="*{chassi}">
+                </div>
+
+                <div class="input-group">
+                    <label for="status">Status do Sensor:</label>
+                    <select id="status" th:field="*{statusSensor}">
+                        <option th:each="status : ${T(br.com.fiap.mottu.challenge.demo.utils.StatusSensor).values()}"
+                                th:value="${status}" th:text="${status}"></option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="andar">Andar:</label>
+                    <input type="text" id="andar" th:field="*{localizacaoAtual.andar}">
+                </div>
+
+                <div class="input-group">
+                    <label for="vaga">Vaga:</label>
+                    <input type="text" id="vaga" th:field="*{localizacaoAtual.vaga}">
+                </div>
+            </div>
+
+            <div class="form-full-width">
+                <button type="submit"  style="margin-top: 8px">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+    <p><a th:href="@{/motos}" class="action-btn">Voltar</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de Motos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script th:src="@{/js/motos.js}"></script>
+</head>
+<body>
+<div class="content-wrapper">
+  <h1>Gerenciamento de Motos</h1>
+
+<div class="buttons">
+  <p><a th:href="@{/motos/cadastro}" class="action-btn">Cadastrar Nova Moto</a></p>
+  <p><a th:href="@{/}" class="action-btn">Home</a></p>
+</div>
+
+  <div id="deleteModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Confirmação de Exclusão</h2>
+      <p>Deseja realmente deletar este item?</p>
+      <div class="modal-actions">
+        <button id="confirmDelete" type="button">Deletar</button>
+        <button id="cancelDelete" type="button">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Modelo</th>
+      <th>Placa</th>
+      <th>Status</th>
+      <th style="text-align: center;">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="moto : ${motos.content}">
+      <td th:text="${moto.id}"></td>
+      <td th:text="${moto.modelo}"></td>
+      <td th:text="${moto.placa}"></td>
+      <td th:text="${moto.statusSensor}"></td>
+      <td>
+        <a th:href="@{/motos/{id}(id=${moto.id})}">Detalhes</a>
+        <a th:href="@{/motos/{id}/editar(id=${moto.id})}">Editar</a>
+        <a href="#" th:attr="data-id=${moto.id}" class="delete-link" onclick="openDeleteModal(event)">Deletar</a>
+      </td>
+    </tr>
+    <tr th:if="${motos.empty}">
+      <td colspan="5" style="text-align: center;">Nenhuma moto encontrada.</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div th:if="${motos.totalPages > 1}" class="pagination">
+    <th:block th:with="searchParam=${modelo != null ? '&modelo=' + modelo : ''}">
+      <a th:href="@{|/motos?page=0${searchParam}|}" th:classappend="${motos.number == 0} ? 'disabled' : ''">Primeira</a>
+      <a th:href="@{|/motos?page=${motos.number - 1}${searchParam}|}" th:classappend="${motos.number == 0} ? 'disabled' : ''">Anterior</a>
+      <span th:each="pageNum : ${#numbers.sequence(1, motos.totalPages)}">
+            <a th:href="@{|/motos?page=${pageNum - 1}${searchParam}|}" th:classappend="${motos.number + 1 == pageNum} ? 'current' : ''" th:text="${pageNum}"></a>
+          </span>
+      <a th:href="@{|/motos?page=${motos.number + 1}${searchParam}|}" th:classappend="${motos.number + 1 >= motos.totalPages} ? 'disabled' : ''">Próxima</a>
+      <a th:href="@{|/motos?page=${motos.totalPages - 1}${searchParam}|}" th:classappend="${motos.number + 1 >= motos.totalPages} ? 'disabled' : ''">Última</a>
+    </th:block>
+  </div>
+</div>
+</body>
+</html>
