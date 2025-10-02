@@ -122,11 +122,6 @@
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>11.7.2</version>
-				<configuration>
-					<url>jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl</url> <!-- host:porta:SID ou serviço -->
-					<user>rm555591</user>
-					<password>200306</password>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
