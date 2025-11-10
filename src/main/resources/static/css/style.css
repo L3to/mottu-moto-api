@@ -40,7 +40,11 @@
 
 body {
     min-height: 100vh;
-    background-color: var(--color-background);
+    /* GLOBAL BACKGROUND: Applied the subtle texture from the login page */
+    background-color: #1a1a1a;
+    background-image: radial-gradient(#333 1px, transparent 0);
+    background-size: 40px 40px;
+
     color: var(--color-on-surface);
     font-family: var(--font-quicksand);
     line-height: 1.6;
@@ -67,7 +71,6 @@ a {
 
 a:hover {
     color: var(--color-primary-container);
-    text-decoration: underline;
 }
 
 /* Utility Class for main content centering/width */
@@ -119,6 +122,18 @@ input[type="text"], input[type="number"], select, textarea {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 35px;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23eff2ec%22%20d%3D%22M287%2064.6a12%2012%200%200%200-8.5%203.6L146.2%20204.1%2013.8%2068.2a12%2012%200%200%200-17%2017l141%20141a12%2012%200%200%200%2017%200l141-141a12%2012%200%200%200%200-17z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    background-size: 10px;
+}
+
+
 input:focus, select:focus, textarea:focus {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 2px var(--color-primary-container);
@@ -140,6 +155,7 @@ button[type="submit"], .btn, .action-btn, button {
     text-decoration: none;
     display: inline-block; /* ensures action-btn links behave like buttons */
     text-align: center;
+    font-family: var(--font-quicksand);
 }
 
 button:hover, .btn:hover, .action-btn:hover {
@@ -442,11 +458,6 @@ button#cancelDelete:hover {
     margin-top: 10px;
 }
 
-/* Ensure links inside the card don't override the card hover effect */
-.hub-card a:hover {
-    text-decoration: none;
-}
-
 /* Assumes variables like --color-primary, --color-surface, --color-on-surface,
    --color-error, --color-success, --color-outline, --color-shadow are defined previously.
 */
@@ -456,10 +467,8 @@ button#cancelDelete:hover {
 /* ------------------------------------------------------------------- */
 
 .login-body {
-    /* Define um fundo sutil para a página de login/registro */
-    background-color: #1a1a1a;
-    background-image: radial-gradient(#333 1px, transparent 0);
-    background-size: 40px 40px;
+    /* Layout adjustments for login page (full screen centering) */
+    /* Background properties removed and moved to global body */
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -571,9 +580,4 @@ button#cancelDelete:hover {
 .link-secondary:hover {
     text-decoration: underline;
     color: #9c27b0; /* Cor de hover ligeiramente diferente */
-}
-
-/* Garante que o body das outras páginas não seja afetado pelo login-body */
-body:not(.login-body) {
-    background-color: var(--color-background);
 }

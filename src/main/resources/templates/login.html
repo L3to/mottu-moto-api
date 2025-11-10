@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!-- Adicionando a fonte Quicksand -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
@@ -14,17 +13,14 @@
 <div class="card login-container">
     <h1>Acesso ao Sistema</h1>
 
-    <!-- Mensagem de erro de login -->
     <div th:if="${param.error}" class="error-message">
         Nome de usuário ou senha inválidos.
     </div>
 
-    <!-- Mensagem de sucesso de logout -->
-    <div th:if="${param.logout}" class="success-message">
+    <div th:if="${param.logout}" class="error-message">
         Você foi desconectado com sucesso.
     </div>
 
-    <!-- Mensagem de sucesso após registro (via RedirectAttributes) -->
     <div th:if="${success}" class="success-message" th:text="${success}"></div>
 
     <form method="POST" th:action="@{/login}">

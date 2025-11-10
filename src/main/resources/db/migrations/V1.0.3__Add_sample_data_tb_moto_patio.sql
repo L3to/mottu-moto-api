@@ -19,7 +19,7 @@ VALUES
         'ABC1234',
         'CHASSI12345678901234',
         1,
-        'PARKED',
+        'ATIVADO',
         '2º Andar',
         'Vaga A15',
         -23.5505,

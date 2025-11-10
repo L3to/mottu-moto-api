@@ -14,7 +14,7 @@
     <h1>Gerenciamento de Usuários</h1>
 
     <div class="buttons">
-        <p><a th:href="@{/}" class="action-btn">Hub Principal</a></p>
+        <p><a th:href="@{/}" class="action-btn" style="margin: 12px">Hub Principal</a></p>
     </div>
 
     <p th:if="${success}" class="success-message" th:text="${success}"></p>
@@ -30,12 +30,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
+        <tr th:each="user : ${users}"
+            th:if="${user.email} != ${#authentication.getName()}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.role}"></td>
             <td class="action-cell">
-                <!-- CORREÇÃO: Agora aponta para /role/toggleRole/{id} -->
                 <form th:action="@{|/role/toggleRole/${user.id}|}" method="post">
                     <button type="submit"
                             th:classappend="${user.role.name() == 'ADMIN'} ? 'secondary-btn' : 'action-btn'"

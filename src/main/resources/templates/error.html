@@ -5,11 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" th:href="@{/css/error.css}">
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <title>Erro | Algo deu errado</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-<div class="error-container">
+<body class="background text-gray-100 min-h-screen flex items-center justify-center">
+<div class="error-container p-6 rounded-xl">
   <div class="face">
     <div class="band">
       <div class="red"></div>
@@ -22,7 +24,9 @@
   </div>
 
   <h1>Eita! Algo deu errado! 😥</h1>
-  <a class="action-btn" th:href="@{/}">Voltar para a Página Inicial</a>
+  <a class="action-btn px-6 py-3 mt-4 font-semibold text-lg rounded-lg shadow-lg" href="/">
+    Voltar para a Página Inicial
+  </a>
 </div>
 </body>
 </html>

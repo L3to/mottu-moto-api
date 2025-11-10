@@ -18,8 +18,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/patios/**", "/role/**").hasRole("ADMIN")
-                        .requestMatchers("/motos/cadastro", "/motos/*/editar", "/motos/*/deletar").hasRole("ADMIN")
-                        .requestMatchers("/motos/**").hasAnyRole("ADMIN", "USER")
+//                        .requestMatchers("/motos/cadastro", "/motos/*/editar", "/motos/*/deletar").hasRole("ADMIN")
+                        .requestMatchers("/motos/").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
