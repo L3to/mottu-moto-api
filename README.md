@@ -1,6 +1,6 @@
-<h1 align="center">Mottu Moto API  </h1>
+<h1 align="center">Mottu Moto MVC  </h1>
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.0.1--SNAPSHOT-blue.svg" />
+  <img src="https://img.shields.io/badge/version-0.0.3--SNAPSHOT-blue.svg" />
   <img src="https://img.shields.io/badge/Spring%20Boot-3.5.4-brightgreen.svg" />
   <img src="https://img.shields.io/badge/Java-21-orange.svg" />
   </a>
@@ -20,7 +20,7 @@
 - RM557313
 <hr>
 
-A API Mottu Moto é uma aplicação web desenvolvida em Java com o framework Spring Boot, projetada para gerenciar informações de motos e pátios com uma interface web completa. O sistema oferece funcionalidades de CRUD para motos e pátios, sistema de autenticação e autorização com Spring Security, interface web responsiva com Thymeleaf, e gerenciamento de usuários com diferentes níveis de permissão. A aplicação utiliza Spring Data JPA para persistência de dados, Flyway para migrations, Spring Validation para validação de entradas e está integrada a um banco de dados Oracle. Além disso, a documentação interativa da API pode ser acessada via Swagger UI. Este projeto foi desenvolvido como parte de um desafio acadêmico em parceria com a FIAP e a Mottu.
+O Mottu Moto MVC é uma aplicação web desenvolvida em Java com o framework Spring Boot, projetada para gerenciar informações de motos e pátios com uma interface web completa. O sistema oferece funcionalidades de CRUD para motos e pátios, sistema de autenticação e autorização com Spring Security, interface web responsiva com Thymeleaf, e gerenciamento de usuários com diferentes níveis de permissão. A aplicação utiliza Spring Data JPA para persistência de dados, Flyway para migrations, Spring Validation para validação de entradas e está integrada a um banco de dados Oracle. Este projeto foi desenvolvido como parte de um desafio acadêmico em parceria com a FIAP e a Mottu.
 <hr>
 
 ## Tecnologias Utilizadas
@@ -34,7 +34,6 @@ A API Mottu Moto é uma aplicação web desenvolvida em Java com o framework Spr
 - **Thymeleaf** (Template Engine)
 - **Flyway** (Database Migration)
 - **Oracle Database**
-- **Swagger/OpenAPI 3** (API Documentation)
 - **Lombok** (Code Generation)
 - **HikariCP** (Connection Pooling)
 - **Maven**
@@ -67,7 +66,6 @@ A API Mottu Moto é uma aplicação web desenvolvida em Java com o framework Spr
 - Confirmação de exclusão via modal
 
 ### 📊 Recursos Adicionais
-- Documentação automática da API com Swagger
 - Migrations automáticas com Flyway
 - Validação de dados com Bean Validation
 - Tratamento global de exceções
@@ -110,7 +108,6 @@ SPRING_DATASOURCE_PASSWORD=SUA_SENHA
 
 4. Acesse a aplicação em: [http://localhost:8082](http://localhost:8082)
 5. Faça login com as credenciais padrão: `admin@mottu.com` / `admin123`
-6. Acesse a documentação da API em: [http://localhost:8082/swagger-ui/index.html](http://localhost:8082/swagger-ui/index.html)
 
 ## Endpoints e Funcionalidades
 
