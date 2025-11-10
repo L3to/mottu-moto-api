@@ -3,7 +3,6 @@ package br.com.fiap.mottu.challenge.demo.controllers;
 import br.com.fiap.mottu.challenge.demo.domain.dto.MotoFullDTO;
 import br.com.fiap.mottu.challenge.demo.utils.StatusSensor;
 import br.com.fiap.mottu.challenge.demo.services.MotoService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,9 +15,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/motos")
-@Tag(name = "Gerenciamento de Motocicletas",
-        description = "API para gerenciamento completo de motocicletas: cadastro, consulta, " +
-                "atualização, remoção e monitoramento de status dos sensores")
 public class MotoController {
 
     @Autowired

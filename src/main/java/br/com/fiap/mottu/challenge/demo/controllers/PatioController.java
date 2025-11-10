@@ -2,7 +2,6 @@ package br.com.fiap.mottu.challenge.demo.controllers;
 
 import br.com.fiap.mottu.challenge.demo.domain.model.Patio;
 import br.com.fiap.mottu.challenge.demo.services.PatioService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,9 +14,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/patios")
-@Tag(name = "Gerenciamento de Pátios (MVC)",
-        description = "Controller MVC para gerenciamento completo de pátios: cadastro, consulta, " +
-                "atualização, remoção e administração das áreas de estacionamento de motocicletas.")
 public class PatioController {
 
     @Autowired
